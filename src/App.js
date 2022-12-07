@@ -38,6 +38,7 @@ function App() {
           todos={todos}
           filteredTodos={filteredTodos}
           setFilteredTodos={setFilteredTodos}
+          setTodos={setTodos}
         />
         <CreateTodo setTodos={setTodos} />
       </div>

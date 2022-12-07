@@ -7,11 +7,12 @@ const CreateTodo = ({ setTodos }) => {
   const [description, setDescription] = useState("");
   const [error, setError] = useState(false);
   const [date, setDate] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const addTodo = async (newTodo) => {
     try {
       const docRef = await addDoc(collection(db, "todo-items"), newTodo);
-      console.log("Document written with ID: ", docRef.id);
+      setTodos((prevTodos) => [...prevTodos, { ...newTodo, id: docRef.id }]);
     } catch (e) {
       console.error("Error adding document: ", e);
     }
@@ -39,8 +40,9 @@ const CreateTodo = ({ setTodos }) => {
       description: description,
       date: date,
     };
-    setTodos((prevTodos) => [...prevTodos, newTodo]);
+    setIsLoading(true);
     addTodo(newTodo);
+    setIsLoading(false);
     setTitle("");
     setDescription("");
     setDate("");
@@ -75,7 +77,7 @@ const CreateTodo = ({ setTodos }) => {
         onChange={handleDate}
       />
       <button type="submit" className="bg-blue-500 p-2 rounded-md">
-        Submit
+        {isLoading ? "Loading" : "Submit"}
       </button>
     </form>
   );

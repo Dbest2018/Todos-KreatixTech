@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Todo from "./Todo";
 
-const TodoList = ({ todos, filteredTodos, setFilteredTodos }) => {
+const TodoList = ({ todos, filteredTodos, setFilteredTodos, setTodos }) => {
   const [filter, setFilter] = useState("");
   const handleFilter = (e) => {
     switch (e.target.value) {
@@ -49,7 +49,7 @@ const TodoList = ({ todos, filteredTodos, setFilteredTodos }) => {
         </select>
       </div>
       {filteredTodos.map((todo) => (
-        <Todo todo={todo} key={todo.id} />
+        <Todo todo={todo} key={todo.id} setTodos={setTodos} />
       ))}
     </div>
   );
