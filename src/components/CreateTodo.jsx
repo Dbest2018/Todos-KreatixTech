@@ -8,19 +8,21 @@ const CreateTodo = ({ setTodos }) => {
   const [error, setError] = useState(false);
   const [date, setDate] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const addTodo = async (newTodo) => {
     try {
       const docRef = await addDoc(collection(db, "todo-items"), newTodo);
       setTodos((prevTodos) => [...prevTodos, { ...newTodo, id: docRef.id }]);
     } catch (e) {
-      console.error("Error adding document: ", e);
+      setErrorMessage("Error adding document");
     }
   };
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
     setError(false);
+    setErrorMessage("");
   };
   const handleDescChange = (e) => {
     setDescription(e.target.value);
@@ -28,6 +30,7 @@ const CreateTodo = ({ setTodos }) => {
   const handleDate = (e) => {
     setDate(e.target.value);
     setError(false);
+    setErrorMessage("");
   };
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -40,9 +43,11 @@ const CreateTodo = ({ setTodos }) => {
       description: description,
       date: date,
     };
+    setTimeout(() => {
+      setIsLoading(false);
+      addTodo(newTodo);
+    }, 3000);
     setIsLoading(true);
-    addTodo(newTodo);
-    setIsLoading(false);
     setTitle("");
     setDescription("");
     setDate("");
@@ -76,6 +81,7 @@ const CreateTodo = ({ setTodos }) => {
         type="date"
         onChange={handleDate}
       />
+      <div className="text-red-700">{errorMessage}</div>
       <button type="submit" className="bg-blue-500 p-2 rounded-md">
         {isLoading ? "Loading" : "Submit"}
       </button>
