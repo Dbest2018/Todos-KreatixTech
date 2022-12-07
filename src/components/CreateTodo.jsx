@@ -23,12 +23,12 @@ const CreateTodo = ({ setTodos }) => {
     setTodos((prevTodos) => [
       ...prevTodos,
       {
+        id: prevTodos.length,
         title: title,
         description: description,
         date: date,
       },
     ]);
-    console.log(title, description, date);
     setTitle("");
     setDescription("");
   };

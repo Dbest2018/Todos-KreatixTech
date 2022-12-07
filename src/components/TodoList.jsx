@@ -1,22 +1,53 @@
-import React from "react";
+import { useState } from "react";
 import Todo from "./Todo";
 
-const TodoList = () => {
+const TodoList = ({ todos, filteredTodos, setFilteredTodos }) => {
+  const [filter, setFilter] = useState("");
+  const handleFilter = (e) => {
+    switch (e.target.value) {
+      case "all":
+        setFilter("All");
+        setFilteredTodos(todos);
+        break;
+      case "date":
+        setFilter("Sort by date");
+        setFilteredTodos((prevFilteredTodos) => {
+          return prevFilteredTodos.sort(function (a, b) {
+            return a.date.date - b.date.date;
+          });
+        });
+        break;
+      case "title":
+        setFilter("Sort by title");
+        setFilteredTodos((prevFilteredTodos) => {
+          return prevFilteredTodos.sort(function (a, b) {
+            return a.title.localeCompare(b.title);
+          });
+        });
+        break;
+      default:
+        setFilteredTodos(todos);
+    }
+  };
   return (
     <div>
       <div className="flex justify-between items-center">
-        <div>
-          total: <span className="text-white">2</span>
+        <div className="mr-4">
+          total: <span className="text-white">{filteredTodos.length}</span>
         </div>
-        <select className="rounded-md p-2 outline-none">
-          <option>All</option>
-          <option className="">Sort by date</option>
-          <option>Sort by Title</option>
+        <select
+          value={filter}
+          className="rounded-md p-2 outline-none"
+          onChange={handleFilter}
+        >
+          <option value="all">All</option>
+          <option value="date">Sort by date</option>
+          <option value="title">Sort by Title</option>
         </select>
       </div>
-      <div className="main">
-        <Todo />
-      </div>
+      {filteredTodos.map((todo) => (
+        <Todo todo={todo} key={todo.id} />
+      ))}
     </div>
   );
 };
