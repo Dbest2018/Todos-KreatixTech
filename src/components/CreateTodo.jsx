@@ -1,11 +1,21 @@
+import { addDoc, collection } from "firebase/firestore";
 import { useState } from "react";
+import { db } from "../firebase/firebase";
 
 const CreateTodo = ({ setTodos }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [error, setError] = useState(false);
+  const [date, setDate] = useState("");
 
-  const date = new Date();
+  const addTodo = async (newTodo) => {
+    try {
+      const docRef = await addDoc(collection(db, "todo-items"), newTodo);
+      console.log("Document written with ID: ", docRef.id);
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+  };
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
@@ -14,23 +24,26 @@ const CreateTodo = ({ setTodos }) => {
   const handleDescChange = (e) => {
     setDescription(e.target.value);
   };
+  const handleDate = (e) => {
+    setDate(e.target.value);
+    setError(false);
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (title === "") {
+    if (title === "" || date === "") {
       setError(true);
       return;
     }
-    setTodos((prevTodos) => [
-      ...prevTodos,
-      {
-        id: prevTodos.length,
-        title: title,
-        description: description,
-        date: date,
-      },
-    ]);
+    const newTodo = {
+      title: title,
+      description: description,
+      date: date,
+    };
+    setTodos((prevTodos) => [...prevTodos, newTodo]);
+    addTodo(newTodo);
     setTitle("");
     setDescription("");
+    setDate("");
   };
   return (
     <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
@@ -48,12 +61,19 @@ const CreateTodo = ({ setTodos }) => {
       <textarea
         value={description}
         onChange={handleDescChange}
-        placeholder="description(optional)"
+        placeholder="Description(optional)"
         className="rounded-md outline-none p-1"
         id="description"
       />
       <label htmlFor="date">Date</label>
-      <div id="date">07/12/2022</div>
+      {error && <div className="text-red-500">Date is required</div>}
+      <input
+        id="date"
+        value={date}
+        className="outline-none p-1 rounded-md"
+        type="date"
+        onChange={handleDate}
+      />
       <button type="submit" className="bg-blue-500 p-2 rounded-md">
         Submit
       </button>

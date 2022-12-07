@@ -7,13 +7,13 @@ const TodoList = ({ todos, filteredTodos, setFilteredTodos }) => {
     switch (e.target.value) {
       case "all":
         setFilter("All");
-        setFilteredTodos(todos);
+        setFilteredTodos([...todos]);
         break;
       case "date":
         setFilter("Sort by date");
         setFilteredTodos((prevFilteredTodos) => {
           return prevFilteredTodos.sort(function (a, b) {
-            return a.date.date - b.date.date;
+            return new Date(b.date) - new Date(a.date);
           });
         });
         break;
@@ -26,7 +26,7 @@ const TodoList = ({ todos, filteredTodos, setFilteredTodos }) => {
         });
         break;
       default:
-        setFilteredTodos(todos);
+        setFilteredTodos([...todos]);
     }
   };
   return (
@@ -40,6 +40,9 @@ const TodoList = ({ todos, filteredTodos, setFilteredTodos }) => {
           className="rounded-md p-2 outline-none"
           onChange={handleFilter}
         >
+          <option value={filter} disabled>
+            {filter === "" ? "All" : filter}
+          </option>
           <option value="all">All</option>
           <option value="date">Sort by date</option>
           <option value="title">Sort by Title</option>
