@@ -1,19 +1,53 @@
-import React from "react";
+import { useState } from "react";
 
-const CreateTodo = () => {
+const CreateTodo = ({ setTodos }) => {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [error, setError] = useState(false);
+
   const date = new Date();
-  console.log(date);
+
+  const handleTitleChange = (e) => {
+    setTitle(e.target.value);
+    setError(false);
+  };
+  const handleDescChange = (e) => {
+    setDescription(e.target.value);
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (title === "") {
+      setError(true);
+      return;
+    }
+    setTodos((prevTodos) => [
+      ...prevTodos,
+      {
+        title: title,
+        description: description,
+        date: date,
+      },
+    ]);
+    console.log(title, description, date);
+    setTitle("");
+    setDescription("");
+  };
   return (
-    <form className="flex flex-col gap-4">
+    <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
       <label htmlFor="title">Title</label>
+      {error && <div className="text-red-500">Title is required</div>}
       <input
         type="text"
+        value={title}
+        onChange={handleTitleChange}
         placeholder="Enter new task"
         className="rounded-md outline-none p-1"
         id="title"
       />
       <label htmlFor="description">Description</label>
       <textarea
+        value={description}
+        onChange={handleDescChange}
         placeholder="description(optional)"
         className="rounded-md outline-none p-1"
         id="description"
