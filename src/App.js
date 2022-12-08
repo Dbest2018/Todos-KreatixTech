@@ -32,7 +32,7 @@ function App() {
   }, [todos]);
   return (
     <div className="flex flex-col items-center bg-slate-400 h-full min-h-screen py-10 box-border font-mono">
-      <div className=" text-white m-8 text-3xl">TodoList</div>
+      <div className=" text-white m-8 text-3xl">Todo List</div>
       <div className="text-gray-700 sm:flex gap-8 items-center">
         <TodoList
           todos={todos}

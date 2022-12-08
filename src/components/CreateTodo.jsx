@@ -16,7 +16,9 @@ const CreateTodo = ({ setTodos }) => {
     try {
       const docRef = await addDoc(collection(db, "todo-items"), newTodo);
       setTodos((prevTodos) => [...prevTodos, { ...newTodo, id: docRef.id }]);
+      setIsLoading(false);
     } catch (e) {
+      setIsLoading(false);
       setErrorMessage("Error adding document");
     }
   };
@@ -45,10 +47,7 @@ const CreateTodo = ({ setTodos }) => {
       description: description,
       date: date,
     };
-    setTimeout(() => {
-      setIsLoading(false);
-      addTodo(newTodo);
-    }, 1000);
+    addTodo(newTodo);
     setIsLoading(true);
     setTitle("");
     setDescription("");
