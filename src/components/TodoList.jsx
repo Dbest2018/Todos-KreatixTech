@@ -49,7 +49,7 @@ const TodoList = ({ todos, filteredTodos, setFilteredTodos, setTodos }) => {
           <option value="title">Sort by Title</option>
         </select>
       </div>
-      {filteredTodos.length > 1 ? (
+      {filteredTodos ? (
         filteredTodos.map((todo) => (
           <Todo todo={todo} key={todo.id} setTodos={setTodos} />
         ))
