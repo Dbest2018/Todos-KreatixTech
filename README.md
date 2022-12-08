@@ -1,4 +1,4 @@
-# Frontend Mentor - Kreatix Technology todo list app solution
+# Kreatix Technology todo list app solution
 
 ## Table of contents
 
