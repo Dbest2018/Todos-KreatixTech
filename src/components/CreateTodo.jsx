@@ -48,7 +48,7 @@ const CreateTodo = ({ setTodos }) => {
     setTimeout(() => {
       setIsLoading(false);
       addTodo(newTodo);
-    }, 3000);
+    }, 1000);
     setIsLoading(true);
     setTitle("");
     setDescription("");
@@ -84,22 +84,22 @@ const CreateTodo = ({ setTodos }) => {
         onChange={handleDate}
       />
       <div className="text-red-700">{errorMessage}</div>
-      {isLoading ? (
-        <ThreeDots
-          height="80"
-          width="80"
-          radius="9"
-          color="#fff"
-          ariaLabel="three-dots-loading"
-          wrapperStyle={{}}
-          wrapperClassName=""
-          visible={true}
-        />
-      ) : (
-        <button type="submit" className="bg-blue-500 p-2 rounded-md">
+      <button type="submit" className="bg-blue-500 p-2 rounded-md">
+        {isLoading ? (
+          <ThreeDots
+            height="30"
+            width="30"
+            radius="9"
+            color="#fff"
+            ariaLabel="three-dots-loading"
+            wrapperStyle={{}}
+            wrapperClassName=""
+            visible={true}
+          />
+        ) : (
           "Submit"
-        </button>
-      )}
+        )}
+      </button>
     </form>
   );
 };
