@@ -2,6 +2,8 @@ import { addDoc, collection } from "firebase/firestore";
 import { useState } from "react";
 import { db } from "../firebase/firebase";
 
+import { ThreeDots } from "react-loader-spinner";
+
 const CreateTodo = ({ setTodos }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -82,9 +84,22 @@ const CreateTodo = ({ setTodos }) => {
         onChange={handleDate}
       />
       <div className="text-red-700">{errorMessage}</div>
-      <button type="submit" className="bg-blue-500 p-2 rounded-md">
-        {isLoading ? "Loading" : "Submit"}
-      </button>
+      {isLoading ? (
+        <ThreeDots
+          height="80"
+          width="80"
+          radius="9"
+          color="#fff"
+          ariaLabel="three-dots-loading"
+          wrapperStyle={{}}
+          wrapperClassName=""
+          visible={true}
+        />
+      ) : (
+        <button type="submit" className="bg-blue-500 p-2 rounded-md">
+          "Submit"
+        </button>
+      )}
     </form>
   );
 };

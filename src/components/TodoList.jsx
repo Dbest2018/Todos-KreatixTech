@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { ThreeDots } from "react-loader-spinner";
 import Todo from "./Todo";
 
 const TodoList = ({ todos, filteredTodos, setFilteredTodos, setTodos }) => {
@@ -48,9 +49,22 @@ const TodoList = ({ todos, filteredTodos, setFilteredTodos, setTodos }) => {
           <option value="title">Sort by Title</option>
         </select>
       </div>
-      {filteredTodos.map((todo) => (
-        <Todo todo={todo} key={todo.id} setTodos={setTodos} />
-      ))}
+      {filteredTodos.length > 1 ? (
+        filteredTodos.map((todo) => (
+          <Todo todo={todo} key={todo.id} setTodos={setTodos} />
+        ))
+      ) : (
+        <ThreeDots
+          height="80"
+          width="80"
+          radius="9"
+          color="#fff"
+          ariaLabel="three-dots-loading"
+          wrapperStyle={{}}
+          wrapperClassName=""
+          visible={true}
+        />
+      )}
     </div>
   );
 };
