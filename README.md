@@ -19,7 +19,7 @@
 ### Links
 
 - Solution URL: [Github](https://github.com/Dbest2018/Todos-KreatixTech)
-- Live Site URL: [live site](https://github.com/Dbest2018/Todos-KreatixTech)
+- Live Site URL: [live site](https://kreatix-todo-dam.netlify.app/)
 
 ## My process
 
